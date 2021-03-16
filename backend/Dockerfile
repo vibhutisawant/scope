@@ -34,6 +34,12 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
      curl -fsSL -o shfmt https://github.com/mvdan/sh/releases/download/v1.3.0/shfmt_v1.3.0_linux_amd64 && \
      chmod +x shfmt && \
      mv shfmt /usr/bin; \
+   elif  [ "$arch_val" = "s390x" ]; then \
+         git clone https://github.com/mvdan/sh.git $GOPATH/src/github.com/mvdan/sh && \
+        cd $GOPATH/src/github.com/mvdan/sh && \
+        git checkout v1.3.0 && \
+        go get -d -t ./... && \
+        go install ./... ;  \
    fi;
 
 RUN pip install yapf==0.16.2 flake8==3.3.0 requests==2.19.1
@@ -47,6 +53,8 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
         curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz; \
     elif [ "$arch_val" = "ppc64el" ]; then \
         curl -fsSLO https://download.docker.com/linux/static/stable/ppc64le/docker-${DOCKERVERSION}.tgz; \
+     elif [ "$arch_val" = "s390x" ]; then \
+        curl -fsSLO https://download.docker.com/linux/static/stable/s390x/docker-${DOCKERVERSION}.tgz; \
     else \
         echo "No Docker client found for architecture $(arch_val)." && \
         exit 1; \
