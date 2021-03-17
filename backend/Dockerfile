@@ -1,5 +1,6 @@
 FROM golang:1.14.2
 ENV SCOPE_SKIP_UI_ASSETS true
+ENV GO111MODULE=on
 RUN set -eux; \
    export arch_val="$(dpkg --print-architecture)"; \
    apt-get update && \
@@ -14,8 +15,8 @@ RUN set -eux; \
 RUN go clean -i net && \
 	go install -tags netgo std && \
    export arch_val="$(dpkg --print-architecture)"; \
-   if [ "$arch_val" != "ppc64el" ]; then \
-	go install -race -tags netgo std; \
+   if [[ "$arch_val" != "ppc64el" || "$arch_val" != "s390x" ]]; then \	
+       go install -race -tags netgo std; \
    fi; \
     go get -tags netgo \
 		github.com/fzipp/gocyclo \
@@ -35,7 +36,7 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
      chmod +x shfmt && \
      mv shfmt /usr/bin; \
    elif  [ "$arch_val" = "s390x" ]; then \
-         git clone https://github.com/mvdan/sh.git $GOPATH/src/github.com/mvdan/sh && \
+        git clone https://github.com/mvdan/sh.git $GOPATH/src/github.com/mvdan/sh && \
         cd $GOPATH/src/github.com/mvdan/sh && \
         git checkout v1.3.0 && \
         go get -d -t ./... && \
