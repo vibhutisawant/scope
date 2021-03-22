@@ -41,9 +41,7 @@ S390X_CC=CC=/usr/bin/s390x-linux-gnu-gcc
 GO=env $(GO_ENV) $(S390X_CC) go
 endif
 
-ifeq ($(GOARCH),amd64)
 GO=env $(GO_ENV) $(ARM_CC) go
-endif
 
 NO_CROSS_COMP=unset GOOS GOARCH
 GO_HOST=$(NO_CROSS_COMP); env $(GO_ENV) go
