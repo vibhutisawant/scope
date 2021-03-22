@@ -39,7 +39,7 @@ ifeq ($(GOARCH),s390x)
 S390X_CC=CC=/usr/bin/s390x-linux-gnu-gcc
 endif
 
-GO=env $(GO_ENV) $(ARM_CC) go
+GO=env $(GO_ENV) $(S390X_CC) go
 
 NO_CROSS_COMP=unset GOOS GOARCH
 GO_HOST=$(NO_CROSS_COMP); env $(GO_ENV) go
