@@ -16,7 +16,7 @@ RUN if [ `uname -m` = "aarch64" ] ; then \
 RUN time env GOGC=off CGO_ENABLED=1 go build -mod vendor -ldflags "-extldflags \"-static\" -X main.version="${VERSION}" -s -w" -tags 'netgo unsafe' -o runsvinit ./vendor/github.com/peterbourgon/runsvinit
 
 # stage 2
-FROM odidev/cloud-agent
+FROM vibhutisawant/cloud-agent
 RUN apk add --no-cache runit
 COPY docker/demo.json /
 COPY --from=builder /home/weave/weave /usr/bin/
