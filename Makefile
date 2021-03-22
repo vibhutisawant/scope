@@ -33,10 +33,12 @@ endif
 
 ifeq ($(GOARCH),arm)
 ARM_CC=CC=/usr/bin/arm-linux-gnueabihf-gcc
+GO=env $(GO_ENV) $(ARM_CC) go
 endif
 
 ifeq ($(GOARCH),s390x)
 S390X_CC=CC=/usr/bin/s390x-linux-gnu-gcc
+GO=env $(GO_ENV) $(S390X_CC) go
 endif
 
 GO=env $(GO_ENV) $(S390X_CC) go
