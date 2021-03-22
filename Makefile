@@ -41,8 +41,6 @@ S390X_CC=CC=/usr/bin/s390x-linux-gnu-gcc
 GO=env $(GO_ENV) $(S390X_CC) go
 endif
 
-GO=env $(GO_ENV) $(S390X_CC) go
-
 NO_CROSS_COMP=unset GOOS GOARCH
 GO_HOST=$(NO_CROSS_COMP); env $(GO_ENV) go
 WITH_GO_HOST_ENV=$(NO_CROSS_COMP); $(GO_ENV)
