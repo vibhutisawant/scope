@@ -13,10 +13,10 @@ RUN set -eux; \
 
 RUN go clean -i net && \
 	go install -tags netgo std && \
-   export arch_val="$(dpkg --print-architecture)"; \
-   if [ "$arch_val" != "ppc64el" ]; then \
+    export arch_val="$(dpkg --print-architecture)"; \
+    if [ "$arch_val" != "ppc64el" ] && [ "$arch_val" != "s390x" ];  then \
 	go install -race -tags netgo std; \
-   fi; \
+    fi; \
     go get -tags netgo \
 		github.com/fzipp/gocyclo \
 		golang.org/x/lint/golint \
@@ -46,6 +46,8 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
         curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz; \
     elif [ "$arch_val" = "ppc64el" ]; then \
         curl -fsSLO https://download.docker.com/linux/static/stable/ppc64le/docker-${DOCKERVERSION}.tgz; \
+	elif [ "$arch_val" = "s390x" ]; then \
+        curl -fsSLO https://download.docker.com/linux/static/stable/s390x/docker-${DOCKERVERSION}.tgz; \
     else \
         echo "No Docker client found for architecture $(arch_val)." && \
         exit 1; \
