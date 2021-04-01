@@ -32,22 +32,14 @@ GO_ENV+=CGO_ENABLED=1
 endif
 
 ifeq ($(GOARCH),arm)
-ARM_CC=CC=/usr/bin/arm-linux-gnueabihf-gcc
-GO=env $(GO_ENV) $(ARM_CC) go
+MUL_CC=CC=/usr/bin/arm-linux-gnueabihf-gcc
 endif
 
 ifeq ($(GOARCH),s390x)
-S390X_CC=CC=/usr/bin/s390x-linux-gnu-gcc
-GO=env $(GO_ENV) $(S390X_CC) go
+MUL_CC=CC=/usr/bin/s390x-linux-gnu-gcc
 endif
 
-ifneq ($(GOARCH),s390x)
-GO=env $(GO_ENV) go
-endif
-
-ifneq ($(GOARCH),arm)
-GO=env $(GO_ENV) go
-endif
+GO=env $(GO_ENV)  $(MUL_CC) go
 
 NO_CROSS_COMP=unset GOOS GOARCH
 GO_HOST=$(NO_CROSS_COMP); env $(GO_ENV) go
