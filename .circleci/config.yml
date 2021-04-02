@@ -37,7 +37,6 @@ workflows:
               only: master
           requires:
             - client-test
-            - integration-tests
 
 jobs:
   lint:
@@ -192,14 +191,8 @@ jobs:
           test -z "${DOCKER_USER}" && exit 0
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           for IMAGE in $IMAGES; do
-              test "${DOCKER_ORGANIZATION:-$DOCKER_USER}" = "weaveworks" || docker tag weaveworks/$IMAGE:latest ${DOCKER_ORGANIZATION:-$DOCKER_USER}/$IMAGE:latest
+              test "${DOCKER_ORGANIZATION:-$DOCKER_USER}" = "vibhutisawant" || docker tag weaveworks/$IMAGE:latest ${DOCKER_ORGANIZATION:-$DOCKER_USER}/$IMAGE:latest
               docker tag weaveworks/$IMAGE:latest ${DOCKER_ORGANIZATION:-$DOCKER_USER}/$IMAGE:$(./tools/image-tag)
               docker push ${DOCKER_ORGANIZATION:-$DOCKER_USER}/$IMAGE:latest
               docker push ${DOCKER_ORGANIZATION:-$DOCKER_USER}/$IMAGE:$(./tools/image-tag)
           done
-      - run: |
-          test -z "${QUAY_USER}" && exit 0
-          docker login -e '.' -u "$QUAY_USER" -p "$QUAY_PASSWORD" quay.io
-          docker tag weaveworks/scope:$(./tools/image-tag) "quay.io/${QUAY_ORGANIZATION}/scope:$(./tools/image-tag)"
-          docker push "quay.io/${QUAY_ORGANIZATION}/scope:$(./tools/image-tag)"
-      - run: test -z "${UI_BUCKET_KEY_ID}" || (make BUILD_IN_CONTAINER=false ui-upload ui-pkg-upload)
