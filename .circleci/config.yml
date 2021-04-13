@@ -156,7 +156,8 @@ jobs:
           at: .
       - run: |
           sudo apt-get update
-          sudo apt-get install python-pip jq pv libpcap0.8-dev
+          sudo apt-get install python-pip jq pv python
+          sudo pip install pcapy
       - run: mkdir $CIRCLE_ARTIFACTS
       # kick off creation of test VMs
       - run: test -z "$SECRET_PASSWORD" || bin/setup-circleci-secrets "$SECRET_PASSWORD"
