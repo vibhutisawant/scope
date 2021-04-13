@@ -157,7 +157,7 @@ jobs:
       - run: |
           sudo apt-get update
           sudo apt-get install python-pip jq pv
-          sudo apt-get install libpcap-dev libpq-dev
+          sudo apt-get install libpcap-dev libpq-dev python-devel
           sudo pip install pcapy
       - run: mkdir $CIRCLE_ARTIFACTS
       # kick off creation of test VMs
