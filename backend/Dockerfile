@@ -1,13 +1,13 @@
-FROM golang:1.14.2
+FROM golang:1.16.2
 ENV SCOPE_SKIP_UI_ASSETS true
 ENV GO111MODULE=on
 RUN set -eux; \
    export arch_val="$(dpkg --print-architecture)"; \
    apt-get update && \
    if [ "$arch_val" = "amd64" ]; then \
-     apt-get install -y libpcap-dev time file shellcheck git gcc-arm-linux-gnueabihf curl build-essential python-pip gcc-s390x-linux-gnu ; \
+     apt-get install -y libpcap-dev time file shellcheck git gcc-arm-linux-gnueabihf curl build-essential; \
    else \
-     apt-get install -y libpcap-dev time file shellcheck git curl build-essential python-pip; \
+     apt-get install -y libpcap-dev time file shellcheck git curl build-essential; \
    fi; \
    \
    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -15,14 +15,13 @@ RUN set -eux; \
 RUN go clean -i net && \
 	go install -tags netgo std && \
    export arch_val="$(dpkg --print-architecture)"; \
-   if [[ "$arch_val" != "ppc64el" || "$arch_val" != "s390x" ]]; then \	
-       go install -race -tags netgo std; \
+   if [ "$arch_val" != "ppc64el" ] && [ "$arch_val" != "s390x" ]; then \
+	go install -race -tags netgo std; \
    fi; \
     go get -tags netgo \
 		github.com/fzipp/gocyclo \
 		golang.org/x/lint/golint \
 		github.com/kisielk/errcheck \
-		github.com/mjibson/esc \
 		github.com/client9/misspell/cmd/misspell && \
 	chmod a+wr --recursive /usr/local/go && \
 	rm -rf /go/pkg/ /go/src/
@@ -42,8 +41,6 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
         go install ./... ;  \
    fi;
 
-RUN pip install yapf==0.16.2 flake8==3.3.0 requests==2.19.1
-
 # Install Docker (client only)
 ENV DOCKERVERSION=17.09.1-ce
 RUN export arch_val="$(dpkg --print-architecture)"; \
@@ -53,7 +50,7 @@ RUN export arch_val="$(dpkg --print-architecture)"; \
         curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz; \
     elif [ "$arch_val" = "ppc64el" ]; then \
         curl -fsSLO https://download.docker.com/linux/static/stable/ppc64le/docker-${DOCKERVERSION}.tgz; \
-     elif [ "$arch_val" = "s390x" ]; then \
+    elif [ "$arch_val" = "s390x" ]; then \
         curl -fsSLO https://download.docker.com/linux/static/stable/s390x/docker-${DOCKERVERSION}.tgz; \
     else \
         echo "No Docker client found for architecture $(arch_val)." && \

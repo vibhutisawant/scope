@@ -1,11 +1,10 @@
 package app
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 	"time"
-
-	"context"
 
 	"github.com/gorilla/mux"
 	ot "github.com/opentracing/opentracing-go"
@@ -183,6 +182,7 @@ func (wc *websocketState) update(ctx context.Context) error {
 	if err != nil {
 		return errors.Wrap(err, "Error generating report")
 	}
+	re.UnsafeRemovePartMergedNodes(ctx)
 	renderer, filter, err := topologyRegistry.RendererForTopology(wc.topologyID, wc.values, re)
 	if err != nil {
 		return errors.Wrap(err, "Error generating report")

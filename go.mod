@@ -1,6 +1,6 @@
 module github.com/weaveworks/scope
 
-go 1.13
+go 1.16
 
 require (
 	camlistore.org v0.0.0-20171230002226-a5a65f0d8b22
@@ -46,11 +46,13 @@ require (
 	github.com/kr/pty v1.1.1
 	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b
 	github.com/miekg/dns v0.0.0-20160129163459-3d66e3747d22
+	github.com/mjibson/esc v0.2.0
 	github.com/nats-io/gnatsd v0.8.1-0.20160607194326-f2c17eb159e1 // indirect
 	github.com/nats-io/nats v1.2.1-0.20160607194537-ce9cdc9addff
 	github.com/nats-io/nuid v0.0.0-20160402145409-a5152d67cf63 // indirect
 	github.com/opencontainers/runc v1.0.0-rc5 // indirect
 	github.com/openebs/k8s-snapshot-client v0.0.0-20180831100134-a6506305fb16
+	github.com/opentracing-contrib/go-stdlib v0.0.0-20190519235532-cf7a6c988dc9
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/paypal/ionet v0.0.0-20130919195445-ed0aaebc5417
 	github.com/pborman/uuid v0.0.0-20150824212802-cccd189d45f7
@@ -58,7 +60,7 @@ require (
 	github.com/peterbourgon/runsvinit v2.0.0+incompatible
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_golang v1.5.0
-	github.com/richo/GOSHOUT v0.0.0-20160308183402-8e98c504bfae
+	github.com/richo/GOSHOUT v0.0.0-20210103052837-9a2e452d4c18
 	github.com/russross/blackfriday v0.0.0-20151020174500-a18a46c9b943 // indirect
 	github.com/shurcooL/sanitized_anchor_name v0.0.0-20150822220530-244f5ac324cb // indirect
 	github.com/sirupsen/logrus v1.4.2
@@ -81,6 +83,7 @@ require (
 	github.com/weaveworks/weave v2.3.1-0.20180427133448-4da998ab4507+incompatible
 	github.com/willdonnelly/passwd v0.0.0-20141013001024-7935dab3074c
 	golang.org/x/net v0.0.0-20191004110552-13f9640d40b9
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20200122134326-e047566fdf82
 	golang.org/x/text v0.3.1-0.20171227012246-e19ae1496984 // indirect
 	golang.org/x/time v0.0.0-20180412165947-fbb02b2291d2
